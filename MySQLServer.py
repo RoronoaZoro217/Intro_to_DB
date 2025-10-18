@@ -10,14 +10,17 @@ def create_connection():
             database = "my_database"
         )
 
-        if mydb.is_connected:
+        if mydb.is_connected():
+            mycursor = mydb.cursor()
+            mycursor.execute("CREATE DATABASE IF NOT EXISTS alx_book_store")
             print("Database 'alx_book_store' created successfully!")
             return mydb
-        
+
     except Error as e:
         print(f"Error connecting to the database: {e}")
         return None
 
 if __name__ == "__main__":
     conn = create_connection()
-    conn.close()
+    if conn:
+        conn.close()
